@@ -5,12 +5,20 @@ const HTML_STATUS = {
     NOT_FOUND: `HTTP/1.1 404 Not Found\r\n\r\n`
 }
 
+const ROUTES = {
+    ROOT: '/',
+    ECHO: '/echo/'
+}
+
 // Uncomment this to pass the first stage
 const server = net.createServer((socket) => {
     socket.on("data", (data) => {
-        const request = data.toString().split(' ')
-        if(request[1] === '/') {
+        const request = data.toString().split(' ')[1]
+        if(request.startsWith(ROUTES.ROOT)) {
             socket.write(HTML_STATUS.OK)
+        } else if(request.startsWith(ROUTES.ECHO))  {
+            const content = request.split(ROUTES.ECHO)
+            socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 3\r\n\r\\${content}`)
         } else {
             socket.write(HTML_STATUS.NOT_FOUND)
         }
