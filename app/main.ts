@@ -17,7 +17,7 @@ const server = net.createServer((socket) => {
         if(request.startsWith(ROUTES.ECHO))  {
             const content = request.replace(ROUTES.ECHO, '')
             socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
-        } else if(request.startsWith(ROUTES.ROOT)) {
+        } else if(request === ROUTES.ROOT) {
             socket.write(HTML_STATUS.OK)
         } else {
             socket.write(HTML_STATUS.NOT_FOUND)
