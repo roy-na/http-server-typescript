@@ -14,10 +14,11 @@ const ROUTES = {
 const server = net.createServer((socket) => {
     socket.on("data", (data) => {
         const request = data.toString().split(' ')[1]
-        console.log(request)
         if(request.startsWith(ROUTES.ECHO))  {
             const content = request.replace(ROUTES.ECHO, '')
             socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
+        } else if(request.startsWith(ROUTES.ROOT)) {
+            socket.write(HTML_STATUS.OK)
         } else {
             socket.write(HTML_STATUS.NOT_FOUND)
         }
