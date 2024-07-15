@@ -17,9 +17,9 @@ const server = net.createServer((socket) => {
     socket.on("data", data => {
         const request = data.toString().split(' ')
         if(request[1] === '/') {
-            return socket.write(HTML_STATUS.OK)
+            socket.write(HTML_STATUS.OK)
         } else {
-            return socket.write(HTML_STATUS.NOT_FOUND)
+            socket.write(HTML_STATUS.NOT_FOUND)
         }
     })
     socket.end();
