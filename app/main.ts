@@ -16,11 +16,10 @@ const HTML_STATUS = {
 const server = net.createServer((socket) => {
     socket.on("data", data => {
         const request = data.toString().split(' ')
-
         if(request[1] === '/') {
-            return socket.write(createBuffer(HTML_STATUS.OK))
+            return socket.write(HTML_STATUS.OK)
         } else {
-            return socket.write(createBuffer(HTML_STATUS.NOT_FOUND))
+            return socket.write(HTML_STATUS.NOT_FOUND)
         }
     })
     socket.end();
