@@ -14,9 +14,7 @@ const ROUTES = {
 const server = net.createServer((socket) => {
     socket.on("data", (data) => {
         const request = data.toString().split(' ')[1]
-        if(request.startsWith(ROUTES.ROOT)) {
-            socket.write(HTML_STATUS.OK)
-        } else if(request.startsWith(ROUTES.ECHO))  {
+        if(request.startsWith(ROUTES.ECHO))  {
             const content = request.split(ROUTES.ECHO)
             socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: 3\r\n\r\\${content}`)
         } else {
