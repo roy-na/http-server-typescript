@@ -28,7 +28,7 @@ const server = net.createServer((socket) => {
                 break
             }
 
-            default: {{
+            default: {
                     socket.write(HTML_STATUS.NOT_FOUND)
                     socket.end();
                     break
