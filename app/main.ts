@@ -32,7 +32,7 @@ const server = net.createServer((socket) => {
 
             case ROUTES.FILES: {
                 const directory: string = process.argv[3];
-                const content = fs.readFileSync(directory + requestContent);
+                const content = fs.readFileSync("." + directory + requestContent);
 
                 if (!content) {
                     socket.write(HTML_STATUS.NOT_FOUND)
