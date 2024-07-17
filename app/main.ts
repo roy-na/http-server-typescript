@@ -32,7 +32,7 @@ const server = net.createServer((socket) => {
             
             case ROUTES.FILES: {
                 let directory: string = process.argv[3];
-                const content = fs.readFileSync(directory + params);
+                const content = fs.readFileSync(directory + params, 'utf-8');
                 socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
                 socket.end();
                 break
