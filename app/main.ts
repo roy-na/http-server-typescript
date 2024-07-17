@@ -5,10 +5,10 @@ import { HTML_STATUS, ROUTES } from "./consts";
 
 const server = net.createServer((socket) => {
     socket.on("data", (data) => {
-        const request = data.toString(); // Full request 
-        const path = request.split(' ')[1]; // Request path
-        const params = path.split('/')[1]; // Params sent after the path
-        const requestContent = path.split('/')[2]
+        const request = data.toString();            // Full request 
+        const path = request.split(' ')[1];         // Request path
+        const params = path.split('/')[1];          // Params sent after the path
+        const requestContent = path.split('/')[2]   // Content of some request
 
         switch (params) {
 
@@ -32,15 +32,14 @@ const server = net.createServer((socket) => {
 
             case ROUTES.FILES: {
                 const directory: string = process.argv[3];
-                const content = fs.readFileSync("." + directory + requestContent);
-
-                if (!content) {
+                try {
+                    const content = fs.readFileSync(directory + requestContent);
+                    socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
+                    socket.end();
+                } catch (e) {
                     socket.write(HTML_STATUS.NOT_FOUND)
                     socket.end();
                 }
-
-                socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
-                socket.end();
                 break
             }
             default: {
