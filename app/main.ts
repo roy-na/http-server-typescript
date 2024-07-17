@@ -1,11 +1,12 @@
 import * as net from "net";
+import fs from "node:fs";
 import { HTML_STATUS, ROUTES } from "./consts";
 
 const server = net.createServer((socket) => {
     socket.on("data", (data) => {
-        const request = data.toString();
-        const path = request.split(' ')[1];
-        const params = path.split('/')[1];
+        const request = data.toString(); // Full request 
+        const path = request.split(' ')[1]; // Request path
+        const params = path.split('/')[1]; // Params sent after the path
 
         switch (params) {
 
@@ -27,7 +28,13 @@ const server = net.createServer((socket) => {
                 socket.end();
                 break
             }
-
+            
+            case ROUTES.FILES: {
+                const content = fs.readFileSync('./tmp' + params);
+                socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
+                socket.end();
+                break
+            }
             default: {
                     socket.write(HTML_STATUS.NOT_FOUND)
                     socket.end();

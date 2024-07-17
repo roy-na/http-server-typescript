@@ -6,5 +6,6 @@ export const HTML_STATUS = {
 export const ROUTES = {
     ROOT: '',
     ECHO: 'echo',
-    USER_AGENT: 'user-agent'
+    USER_AGENT: 'user-agent',
+    FILES: 'files'
 }
