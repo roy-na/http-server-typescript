@@ -1,5 +1,6 @@
 import * as net from "net";
 import fs from "node:fs";
+import * as process from 'process';
 import { HTML_STATUS, ROUTES } from "./consts";
 
 const server = net.createServer((socket) => {
@@ -30,7 +31,8 @@ const server = net.createServer((socket) => {
             }
             
             case ROUTES.FILES: {
-                const content = fs.readFileSync('./tmp/' + params);
+                let directory: string = process.argv[3];
+                const content = fs.readFileSync(directory + params);
                 socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
                 socket.end();
                 break
