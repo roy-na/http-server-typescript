@@ -10,8 +10,8 @@ const server = net.createServer((socket) => {
         switch (params) {
 
             case ROUTES.ECHO: {
-                const content = request.replace(ROUTES.ECHO, '')
-                socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
+                const message = path.split('/')[2]
+                socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${message.length}\r\n\r\n${message}`)
                 socket.end();
             }
 
