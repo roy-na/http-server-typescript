@@ -4,7 +4,7 @@ export const HTML_STATUS = {
 }
 
 export const ROUTES = {
-    ROOT: '/',
+    ROOT: '',
     ECHO: 'echo',
     USER_AGENT: 'user-agent'
 }
