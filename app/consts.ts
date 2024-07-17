@@ -1,6 +1,7 @@
 export const HTML_STATUS = {
     OK: `HTTP/1.1 200 OK\r\n\r\n`,
-    NOT_FOUND: `HTTP/1.1 404 Not Found\r\n\r\n`
+    NOT_FOUND: `HTTP/1.1 404 Not Found\r\n\r\n`,
+    CREATED: `HTTP/1.1 201 Created\r\n\r\n`
 }
 
 export const ROUTES = {
