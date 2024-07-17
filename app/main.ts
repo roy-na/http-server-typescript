@@ -9,6 +9,11 @@ const server = net.createServer((socket) => {
 
         switch (params) {
 
+            case ROUTES.ROOT: {
+                socket.write(HTML_STATUS.OK)
+                socket.end();
+                break
+            }
             case ROUTES.ECHO: {
                 const message = path.split('/')[2]
                 socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${message.length}\r\n\r\n${message}`)
@@ -23,16 +28,10 @@ const server = net.createServer((socket) => {
                 break
             }
 
-            default: {
-                if (request === ROUTES.ROOT) {
-                    socket.write(HTML_STATUS.OK)
-                    socket.end();
-                    break
-                } else {
+            default: {{
                     socket.write(HTML_STATUS.NOT_FOUND)
                     socket.end();
                     break
-                }
             }
         }
 
