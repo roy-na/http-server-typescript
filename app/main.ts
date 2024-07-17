@@ -31,7 +31,7 @@ const server = net.createServer((socket) => {
             
             case ROUTES.FILES: {
                 const content = fs.readFileSync('./tmp' + params);
-                socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
+                socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
                 socket.end();
                 break
             }
