@@ -4,9 +4,7 @@ import { HTML_STATUS, ROUTES } from "./consts";
 const server = net.createServer((socket) => {
     socket.on("data", (data) => {
         const request = data.toString();
-        console.log(request);
         const path = request.split(' ')[1];
-        console.log(path.split('/')[1])
         const params = path.split('/')[1];
 
         switch (params) {
