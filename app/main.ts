@@ -34,7 +34,7 @@ const server = net.createServer((socket) => {
                 const directory: string = process.argv[3];
                 console.log(directory)
                 console.log(params)
-                const content = fs.readFileSync(directory + params, 'utf-8');
+                const content = fs.readFileSync("." + directory + params, 'utf-8');
                 console.log(content)
                 if(!content){
                     socket.write(HTML_STATUS.NOT_FOUND)
