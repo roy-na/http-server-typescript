@@ -8,6 +8,7 @@ const server = net.createServer((socket) => {
         const request = data.toString(); // Full request 
         const path = request.split(' ')[1]; // Request path
         const params = path.split('/')[1]; // Params sent after the path
+        const requestContent = path.split('/')[2]
 
         switch (params) {
 
@@ -17,8 +18,7 @@ const server = net.createServer((socket) => {
                 break
             }
             case ROUTES.ECHO: {
-                const message = path.split('/')[2]
-                socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${message.length}\r\n\r\n${message}`)
+                socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${requestContent.length}\r\n\r\n${requestContent}`)
                 socket.end();
                 break
             }
@@ -29,26 +29,24 @@ const server = net.createServer((socket) => {
                 socket.end();
                 break
             }
-            
+
             case ROUTES.FILES: {
                 const directory: string = process.argv[3];
-                console.log(directory)
-                console.log(params)
-                console.log(process.argv.slice(2))
-                const content = fs.readFileSync("." + directory + params, 'utf-8');
-                console.log(content)
-                if(!content){
+                const content = fs.readFileSync(directory + requestContent);
+
+                if (!content) {
                     socket.write(HTML_STATUS.NOT_FOUND)
                     socket.end();
                 }
+
                 socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
                 socket.end();
                 break
             }
             default: {
-                    socket.write(HTML_STATUS.NOT_FOUND)
-                    socket.end();
-                    break
+                socket.write(HTML_STATUS.NOT_FOUND)
+                socket.end();
+                break
             }
         }
 
