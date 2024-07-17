@@ -17,10 +17,10 @@ const server = net.createServer((socket) => {
             }
 
             case ROUTES.USER_AGENT: {
-                const userAgent = data.toString().split('User-Agent: ')[1].split('\r\n')[0]
+                const userAgent = request.split('User-Agent: ')[1].split('\r\n')[0]
                 socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${userAgent.length}\r\n\r\n${userAgent}`)
             }
-            
+
             default: {
                 if (request === ROUTES.ROOT) {
                     socket.write(HTML_STATUS.OK)
