@@ -28,7 +28,7 @@ const server = net.createServer((socket) => {
                 break
             }
             case ROUTES.ECHO: {
-                if(headers["Accept-Encoding"] === "gzip"){
+                if(headers["Accept-Encoding"]?.includes("gzip")){
                     socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Encoding: gzip\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
                     socket.end();
                 }
