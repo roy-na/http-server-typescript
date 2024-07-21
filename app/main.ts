@@ -12,14 +12,7 @@ const server = net.createServer((socket) => {
         const [body] = restOfheaders.splice(restOfheaders.length - 1);
         const [method, path] = requestLine.split(" ");
         const [root, pathRoute, content, ...restParameters] = path.split('/');
-        console.log("requestLine: ", requestLine)
         const headers = arrayToObject(restOfheaders)
-        console.log("body: ", body)
-        console.log("method: ", method)
-        console.log("path: ", path)
-        console.log("root: ", root)
-        console.log("restParameters: ", restParameters)
-        console.log("content: ", content)
 
         switch (pathRoute) {
 
