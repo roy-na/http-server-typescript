@@ -30,8 +30,8 @@ const server = net.createServer((socket) => {
             }
             case ROUTES.ECHO: {
                 if(headers["Accept-Encoding"]?.includes("gzip")){
-                    const encodedBody = gzipSync(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Encoding: gzip\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
-                    socket.write(encodedBody)
+                    const encodedBody = gzipSync(content)
+                    socket.write((`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Encoding: gzip\r\nContent-Length: ${content.length}\r\n\r\n${encodedBody}`))
                     socket.end();
                 }
                 socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
