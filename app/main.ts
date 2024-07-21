@@ -3,6 +3,7 @@ import fs from "node:fs";
 import * as process from 'process';
 import { HTML_STATUS, ROUTES } from "./consts";
 import { arrayToObject } from "./utils";
+import { gzipSync } from "zlib";
 
 const server = net.createServer((socket) => {
     socket.on("data", (data) => {
@@ -29,7 +30,8 @@ const server = net.createServer((socket) => {
             }
             case ROUTES.ECHO: {
                 if(headers["Accept-Encoding"]?.includes("gzip")){
-                    socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Encoding: gzip\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
+                    const encodedBody = gzipSync(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Encoding: gzip\r\nContent-Length: ${content.length}\r\n\r\n${content}`)
+                    socket.write(encodedBody)
                     socket.end();
                 }
                 socket.write(`HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${content.length}\r\n\r\n${content}`)

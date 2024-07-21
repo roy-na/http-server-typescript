@@ -6,7 +6,8 @@
     "dev": "bun run app/main.ts"
   },
   "dependencies": {
-    "async": "^3.2.0"
+    "async": "^3.2.0",
+    "gzip": "^0.1.0"
   },
   "devDependencies": {
     "@types/node": "^20.14.10"
