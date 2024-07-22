@@ -20,7 +20,7 @@ export class HttpServerRequest {
         const [root, pathRoute, content, ...restParameters] = path.split('/');
 
         this.headers = arrayToObject(restOfheaders)
-        this.body = body 
+        this.body = body
         this.method = method
         this.pathRoute = pathRoute
         this.content = content
@@ -40,6 +40,10 @@ export class HttpServerRequest {
         },
         withContent: (content: Buffer | string) => {
             this.response + content
+            return this.responseBuilder
+        },
+        withEncoding: () => {
+            this.response + `Content-Encoding: ${this.encoding}\r\n`
             return this.responseBuilder
         },
         flush: () => {
@@ -96,10 +100,19 @@ export class HttpServerRequest {
         if (this.encoding === 'gzip') {
             const buffer = Buffer.from(this.content, 'utf8');
             const encodedBody = gzipSync(buffer)
-            response = this.responseBuilder.withContentType('text/plain').withContentLength(encodedBody.length).flush()
+            response = this.responseBuilder
+                .withContentType('text/plain')
+                .withEncoding()
+                .withContentLength(encodedBody.length)
+                .flush()
             return { response, encodedBody }
         }
-        response = this.responseBuilder.withContentType('text/plain').withContentLength(this.content.length).withContent(this.content).flush()
+        response = this.responseBuilder
+            .withContentType('text/plain')
+            .withEncoding()
+            .withContentLength(this.content.length)
+            .withContent(this.content)
+            .flush()
         return { response, encodedBody: undefined }
     }
 
