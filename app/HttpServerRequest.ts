@@ -20,7 +20,7 @@ export class HttpServerRequest {
         const [root, pathRoute, content, ...restParameters] = path.split('/');
 
         this.headers = arrayToObject(restOfheaders)
-        this.body = body
+        this.body = body 
         this.method = method
         this.pathRoute = pathRoute
         this.content = content
