@@ -96,11 +96,11 @@ export class HttpServerRequest {
         if (this.encoding === 'gzip') {
             const buffer = Buffer.from(this.content, 'utf8');
             const encodedBody = gzipSync(buffer)
-            response = this.responseBuilder.withContentLength(encodedBody.length).flush()
+            response = this.responseBuilder.withContentType('text/plain').withContentLength(encodedBody.length).flush()
             return { response, encodedBody }
         }
-        response = this.responseBuilder.withContentLength(this.content.length).withContent(this.content).flush()
-        return { response, encodedBody: '' }
+        response = this.responseBuilder.withContentType('text/plain').withContentLength(this.content.length).withContent(this.content).flush()
+        return { response, encodedBody: undefined }
     }
 
     getRoutPath() {
