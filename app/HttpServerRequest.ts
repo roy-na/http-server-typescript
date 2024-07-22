@@ -57,7 +57,7 @@ export class HttpServerRequest {
     private read(path: string) {
         const fileContent = fs.readFileSync(path);
         const response = this.responseBuilder
-            .withContentType('text/plain')
+            .withContentType('application/octet-stream')
             .withContentLength(fileContent.length)
             .withContent(fileContent)
             .flush()
