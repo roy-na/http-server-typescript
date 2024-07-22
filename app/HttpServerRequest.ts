@@ -103,12 +103,14 @@ export class HttpServerRequest {
                 .withEncoding()
                 .withContentLength(encodedBody.length)
                 .flush()
+            console.log(response)
             return { response, encodedBody }
         }
         const response = this.responseBuilder
-            .withContentLength(this.content.length)
-            .withContent(this.content)
-            .flush()
+        .withContentLength(this.content.length)
+        .withContent(this.content)
+        .flush()
+        console.log(response)
         return { response, encodedBody: undefined }
     }
 
