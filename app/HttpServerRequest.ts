@@ -24,7 +24,7 @@ export class HttpServerRequest {
         this.method = method
         this.pathRoute = pathRoute
         this.content = content
-        this.encoding = this.headers['Accept-Encoding'].includes('gzip') ? 'gzip' : ''
+        this.encoding = this.headers['Accept-Encoding']?.includes('gzip') ? 'gzip' : ''
         this.response = `HTTP/1.1 200 OK\r\n`
 
     }
