@@ -11,16 +11,17 @@ const server = net.createServer((socket) => {
     socket.on("data", (data) => {
         const httpServerRequest = new HttpServerRequest(data.toString())
         switch (httpServerRequest.getRoutPath()) {
-
             case ROUTES.ROOT: {
                 socket.write(HTML_STATUS.OK)
                 socket.end();
                 break
             }
             case ROUTES.ECHO: {
-               const { response, encodedBody } = httpServerRequest.echo()
+                const { response, encodedBody } = httpServerRequest.echo()
                 socket.write(response)
-                encodedBody.length && socket.write(encodedBody) 
+                if (encodedBody.length) {
+                    socket.write(encodedBody)
+                }
                 socket.end();
                 break
             }
