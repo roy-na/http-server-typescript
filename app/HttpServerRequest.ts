@@ -95,17 +95,19 @@ export class HttpServerRequest {
     }
 
     echo() {
-        this.responseBuilder.withContentType('text/plain')
+
         if (this.encoding === 'gzip') {
             const buffer = Buffer.from(this.content, 'utf8');
             const encodedBody = gzipSync(buffer)
             const response = this.responseBuilder
                 .withEncoding()
+                .withContentType('text/plain')
                 .withContentLength(encodedBody.length)
                 .flush()
             return { response, encodedBody }
         }
         const response = this.responseBuilder
+            .withContentType('text/plain')
             .withContentLength(this.content.length)
             .withContent(this.content)
             .flush()
