@@ -31,19 +31,19 @@ export class HttpServerRequest {
 
     responseBuilder = {
         withContentType: (type: string) => {
-            this.response + `Content-Type: ${type}\r\n`
+            this.response = this.response + `Content-Type: ${type}\r\n`
             return this.responseBuilder
         },
         withContentLength: (length: number) => {
-            this.response + `Content-Length: ${length}\r\n\r\n`
+            this.response = this.response + `Content-Length: ${length}\r\n\r\n`
             return this.responseBuilder
         },
         withContent: (content: Buffer | string) => {
-            this.response + content
+            this.response = this.response + content
             return this.responseBuilder
         },
         withEncoding: () => {
-            this.response + `Content-Encoding: ${this.encoding}\r\n`
+            this.response = this.response + `Content-Encoding: ${this.encoding}\r\n`
             return this.responseBuilder
         },
         flush: () => {
@@ -103,14 +103,12 @@ export class HttpServerRequest {
                 .withEncoding()
                 .withContentLength(encodedBody.length)
                 .flush()
-            console.log(response)
             return { response, encodedBody }
         }
         const response = this.responseBuilder
         .withContentLength(this.content.length)
         .withContent(this.content)
         .flush()
-        console.log(response)
         return { response, encodedBody: undefined }
     }
 
