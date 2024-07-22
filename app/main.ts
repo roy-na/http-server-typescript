@@ -19,7 +19,7 @@ const server = net.createServer((socket) => {
             case ROUTES.ECHO: {
                 const { response, encodedBody } = httpServerRequest.echo()
                 socket.write(response)
-                if (encodedBody.length) {
+                if (encodedBody) {
                     socket.write(encodedBody)
                 }
                 socket.end();
